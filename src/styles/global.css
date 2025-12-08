@@ -1,0 +1,101 @@
+
+/* Import Adobe Fonts (Typekit) */
+@import url("https://use.typekit.net/sxz6cod.css");
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+
+/* Rich Text Elements */
+.richtext__text {
+  font-family: "gamay-condensed", sans-serif !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+}
+
+/* Gamay Condensed Font Family Classes */
+.font-gamay-light {
+  font-family: "gamay-condensed", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.font-gamay-regular {
+  font-family: "gamay-condensed", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Apply Gamay font to headings (optional) */
+h1, h2, h3, h4, h5, h6, div{
+  font-family: "gamay-condensed", sans-serif;
+  font-weight: 400;
+  text-wrap: balance;
+}
+
+/* Body text override (if needed) */
+p {
+  font-family: "gamay-condensed", sans-serif;
+  font-weight: 200;
+  text-wrap: pretty;
+}
+
+/* ============================================
+   CUSTOM STYLES
+   ============================================ */
+
+/* Add any additional global styles below */
+
+/* Buttons - Target Wix button classes */
+button, 
+.button,
+.wixui-button,
+.wixui-button__label,
+[role="button"],
+[data-testid="linkElement"] {
+  font-family: "gamay-condensed", sans-serif !important;
+  font-weight: 400 !important;
+  transition: all 0.3s ease;
+}
+
+/* Specific Wix button label class */
+.w4Vxx6,
+.wixui-button .wixui-button__label,
+span[class*="wixui-button__label"] {
+  font-family: "gamay-condensed", sans-serif !important;
+  font-weight: 400 !important;
+}
+
+/* Form inputs */
+input, textarea, select {
+  font-family: "gamay-condensed", sans-serif;
+}
+
+/* Navigation */
+nav, .nav-menu {
+  font-family: "gamay-condensed", sans-serif;
+  font-weight: 400;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.text-light {
+  font-weight: 200 !important;
+}
+
+.text-regular {
+  font-weight: 400 !important;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Mobile-specific font adjustments if needed */
+  body {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,184 @@
+import { fetch } from 'wix-fetch';
+import { getSecret } from 'wix-secrets-backend';
+
+const SHOPMONKEY_API_URL = 'https://api.shopmonkey.cloud/v3';
+
+// Test 1: Get existing customers to see structure
+export async function testGetCustomers() {
+    try {
+        const apiKey = await getSecret('shopmonkeyApiKey');
+        
+        const response = await fetch(`${SHOPMONKEY_API_URL}/customer?limit=1`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        const data = await response.json();
+        
+        console.log("GET Customers Response:", JSON.stringify(data, null, 2));
+        
+        return {
+            success: response.status === 200,
+            status: response.status,
+            data: data
+        };
+        
+    } catch (error) {
+        console.error("Error:", error);
+        return { success: false, error: error.message };
+    }
+}
+
+// Test 2: Get existing vehicles to see structure
+export async function testGetVehicles() {
+    try {
+        const apiKey = await getSecret('shopmonkeyApiKey');
+        
+        const response = await fetch(`${SHOPMONKEY_API_URL}/vehicle?limit=1`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        const data = await response.json();
+        
+        console.log("GET Vehicles Response:", JSON.stringify(data, null, 2));
+        
+        return {
+            success: response.status === 200,
+            status: response.status,
+            data: data
+        };
+        
+    } catch (error) {
+        console.error("Error:", error);
+        return { success: false, error: error.message };
+    }
+}
+
+// Test 3: Get existing orders to see structure
+export async function testGetOrders() {
+    try {
+        const apiKey = await getSecret('shopmonkeyApiKey');
+        
+        const response = await fetch(`${SHOPMONKEY_API_URL}/order?limit=1`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        const data = await response.json();
+        
+        console.log("GET Orders Response:", JSON.stringify(data, null, 2));
+        
+        return {
+            success: response.status === 200,
+            status: response.status,
+            data: data
+        };
+        
+    } catch (error) {
+        console.error("Error:", error);
+        return { success: false, error: error.message };
+    }
+}
+
+// Test 4: Try creating a test customer
+export async function testCreateCustomer() {
+    try {
+        const apiKey = await getSecret('shopmonkeyApiKey');
+        
+        // Test customer data
+        const testData = {
+            firstName: "Test",
+            lastName: "Customer",
+            email: "test@example.com",
+            phone: "555-0000",
+            // Use schema-approved customerType value
+            customerType: "Customer"
+        };
+        
+        const response = await fetch(`${SHOPMONKEY_API_URL}/customer`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(testData)
+        });
+        
+        const data = await response.json();
+        
+        console.log("POST Customer Response:", JSON.stringify(data, null, 2));
+        console.log("Response Status:", response.status);
+        
+        return {
+            success: response.status === 200 || response.status === 201,
+            status: response.status,
+            data: data,
+            testData: testData
+        };
+        
+    } catch (error) {
+        console.error("Error:", error);
+        return { success: false, error: error.message };
+    }
+}
+
+// Test 5: Get your location info (needed for some API calls)
+export async function testGetLocation() {
+    try {
+        const apiKey = await getSecret('shopmonkeyApiKey');
+        
+        const response = await fetch(`${SHOPMONKEY_API_URL}/location`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        const data = await response.json();
+        
+        console.log("GET Location Response:", JSON.stringify(data, null, 2));
+        
+        return {
+            success: response.status === 200,
+            status: response.status,
+            data: data
+        };
+        
+    } catch (error) {
+        console.error("Error:", error);
+        return { success: false, error: error.message };
+    }
+}
+
+// Test 6: Run all tests
+export async function runAllTests() {
+    console.log("=== Starting ShopMonkey API Tests ===");
+    
+    const results = {
+        location: await testGetLocation(),
+        customers: await testGetCustomers(),
+        vehicles: await testGetVehicles(),
+        orders: await testGetOrders(),
+        createCustomer: await testCreateCustomer()
+    };
+    
+    console.log("=== Test Results Summary ===");
+    console.log("Location Test:", results.location.success ? "✓ PASS" : "✗ FAIL");
+    console.log("Get Customers:", results.customers.success ? "✓ PASS" : "✗ FAIL");
+    console.log("Get Vehicles:", results.vehicles.success ? "✓ PASS" : "✗ FAIL");
+    console.log("Get Orders:", results.orders.success ? "✓ PASS" : "✗ FAIL");
+    console.log("Create Customer:", results.createCustomer.success ? "✓ PASS" : "✗ FAIL");
+    
+    return results;
+}
